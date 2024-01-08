@@ -4,17 +4,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   selector: 'bc-not-found-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mat-card>
-      <mat-card-title>404: Not Found</mat-card-title>
-      <mat-card-content>
-        <p>Hey! It looks like this page doesn't exist yet.</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/login">
-          Take me to login
-        </button>
-      </mat-card-actions>
-    </mat-card>
+    <p>Page not found</p>
   `,
   styles: [
     `

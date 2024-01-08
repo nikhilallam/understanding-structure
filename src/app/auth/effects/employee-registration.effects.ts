@@ -5,6 +5,9 @@ import { of } from 'rxjs';
 import * as EmployeeRegistrationActions from '../actions/employee-registration.actions';
 import { EmployeesService } from '../../auth/services/employees.service';
 import { Router } from '@angular/router';
+import { GetEmployeesActions } from 'src/app/employees/actions';
+import { Store } from '@ngrx/store';
+
 
 
 @Injectable()
@@ -31,5 +34,5 @@ export class EmployeeRegistrationEffects {
     {dispatch: false}
   )
 
-  constructor(private actions$: Actions, private employeeService: EmployeesService, private router:Router) {}
+  constructor(private actions$: Actions, private employeeService: EmployeesService, private router:Router, private store:Store) {}
 }

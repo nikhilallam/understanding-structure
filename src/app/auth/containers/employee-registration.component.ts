@@ -15,26 +15,26 @@ import { EmployeeRegistrationActions } from '../actions';
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" id="email" formControlName="email" />
-          <mat-error *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+          <div *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
             Email is required.
-          </mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
+          </div>
+          <div *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
             Invalid email address.
-          </mat-error>
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
           <input type="password" id="password" formControlName="password" />
-          <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+          <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
             Password is required.
-          </mat-error>
+          </div>
         </div>
         <button type="submit" [disabled]="loginForm.invalid">Login</button>
       </form>
     </div>  
   `,
 })
-export class AppComponent {
+export class EmployeeRegistrationComponent {
   loginForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private router:Router, private store:Store<EmployeeRegistrationState>) {

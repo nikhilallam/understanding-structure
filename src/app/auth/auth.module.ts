@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppComponent, NotFoundPageComponent } from './containers';
+import { EmployeeRegistrationComponent, NotFoundPageComponent } from './containers';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material';
 import { StoreModule } from '@ngrx/store';
 import { employeeRegistrationReducer } from './reducers/employee-registration.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { EmployeeRegistrationEffects } from './effects/employee-registration.effects';
+import { AuthRoutingModule } from './auth-routing-module';
 
 export const COMPONENTS = [
-  AppComponent,
-  NotFoundPageComponent
 ]
 
 @NgModule({
@@ -20,9 +18,7 @@ export const COMPONENTS = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    MaterialModule,
-    StoreModule.forRoot({ employeeRegistration: employeeRegistrationReducer }),
-    EffectsModule.forRoot([EmployeeRegistrationEffects])
+    AuthRoutingModule
   ],
   exports: COMPONENTS
 })
