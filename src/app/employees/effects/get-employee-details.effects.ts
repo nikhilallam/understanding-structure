@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { GetEmployeeDetailsActions, GetEmployeesActions } from '../actions';
+import { GetEmployeeDetailsActions } from '../actions';
 import { EmployeesService } from '../services/employees.service';
 import { IEmployeeDetail } from '../models';
 

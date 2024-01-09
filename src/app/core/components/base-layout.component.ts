@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'base-layout',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div>Base layout</div>
+    <div><h1>Understanding structure</h1></div>
   `,
 })
 export class BaseLayoutComponent {

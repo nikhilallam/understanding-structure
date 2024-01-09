@@ -6,15 +6,18 @@ import { Router } from '@angular/router';
   selector: 'employee-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div>List of {{employees?.length}} employees</div>
-    <ul>
-      <li *ngFor="let employee of employees">
-            <a (click)="navigateToEmployeeDetails(employee.id)">
-                {{ employee.employee_name }}
-            </a>
-      </li>
-    </ul>
+    <div class="employee-list">
+        <div>List of {{employees?.length}} employees</div>
+        <ul>
+            <li *ngFor="let employee of employees">
+                    <a (click)="displayEmployeeDetails(employee.id)">
+                        {{ employee.employee_name }}
+                    </a>
+            </li>
+        </ul>
+    </div>
   `,
+  styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent {
     @Input() employees!: IEmployee[];
@@ -22,7 +25,7 @@ export class EmployeeListComponent {
     constructor(private router:Router) {
     }
     
-    navigateToEmployeeDetails(id: number): void {
-        this.router.navigate(['/employees', id]);
+    displayEmployeeDetails(id: number): void {
+        
     }
 }

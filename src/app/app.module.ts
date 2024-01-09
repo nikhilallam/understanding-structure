@@ -13,8 +13,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { EmployeeRegistrationEffects } from './auth/effects/employee-registration.effects';
 import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/containers';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BaseLayoutComponent } from './core/components';
+import { MaterialModule } from './material';
 
 export const COMPONENTS = [
+  BaseLayoutComponent,
   EmployeeRegistrationComponent,
   NotFoundPageComponent
 ]
@@ -32,6 +35,7 @@ export const COMPONENTS = [
     AuthModule,
     EmployeesModule,
     ReactiveFormsModule,
+    MaterialModule,
     StoreModule.forRoot(employeeRegistrationReducer),
     EffectsModule.forRoot([EmployeeRegistrationEffects])
   ],

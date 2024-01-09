@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BaseLayoutComponent } from './components/base-layout-component';
 import { RouterModule } from '@angular/router';
 import { CoreRoutingModule } from './core-routing.module';
+import { BaseLayoutComponent } from './components';
 
 
 @NgModule({

@@ -31,8 +31,9 @@ import { EmployeeRegistrationActions } from '../actions';
         </div>
         <button type="submit" [disabled]="loginForm.invalid">Login</button>
       </form>
-    </div>  
+    </div>
   `,
+  styleUrls: ['./employee-registration.component.scss']
 })
 export class EmployeeRegistrationComponent {
   loginForm!: FormGroup;
