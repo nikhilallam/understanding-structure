@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { GetEmployeeDetailsActions, GetEmployeesActions } from '../actions';
+import { GetEmployeeDetailsActions, GetEmployeesActions, SearchTermActions } from '../actions';
 import { Observable } from 'rxjs';
 import { IEmployee } from '../models';
-import { selectAllEmployees, selectEmployeeDetails, selectEmployeeError, selectEmployeeLoading } from '../selectors';
+import { selectAllEmployees, selectEmployeeDetails, selectEmployeeError, selectEmployeeLoading, selectSearchTerm } from '../selectors';
+import { ISearchTermRequest } from '../models/search-term.request.model';
 
 @Component({
   selector: 'employees',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+    <input type="text" (input)="onSearchInput($event)" placeholder="Search" />
     <employee-detail *ngIf="showDetails" [employee]="(employeeDetails$ | async)!"></employee-detail>
     <div class="employee-list">
       <ul *ngFor="let employee of employees$ | async">
@@ -26,11 +28,15 @@ import { selectAllEmployees, selectEmployeeDetails, selectEmployeeError, selectE
 
 export class EmployeesContainer {
 
+  public employees$?: Observable<IEmployee[]>;
+  public loading$?: Observable<Boolean>;
+  public error$?: any;
+  public filteredEmployees$?: Observable<IEmployee[]>;
+  public employeeDetails$?: Observable<IEmployee>;
+
   public employees:IEmployee[] = []
+  public employeesCopy:IEmployee[] = []
   public showDetails:boolean = false
-  employees$?: Observable<IEmployee[]>;
-  loading$?: Observable<Boolean>;
-  error$?: any;
   public employeeDetails:IEmployee = {
     id: 0,
     employee_name: '',
@@ -39,13 +45,13 @@ export class EmployeesContainer {
     profile_image: ''
   }
 
-  employeeDetails$?: Observable<IEmployee>;
   
   constructor(private router:Router, private store: Store) {
     this.employees$ = store.select(selectAllEmployees);
     this.loading$ = store.select(selectEmployeeLoading);
     this.error$ = store.select(selectEmployeeError);
     this.employeeDetails$ = store.select(selectEmployeeDetails);
+    this.filteredEmployees$ = store.select(selectSearchTerm);
   }
 
   ngOnInit(): void {
@@ -54,11 +60,21 @@ export class EmployeesContainer {
         this.router.navigate(['/notFound'])
     } else {
         this.store.dispatch(GetEmployeesActions.getEmployees());
+        this.employees$?.subscribe(data => this.employeesCopy = data)
     }
   }
 
   displayEmployeeDetails(id: number) {
     this.showDetails = true
     this.store.dispatch(GetEmployeeDetailsActions.getEmployeeDetails({ id }));
+  }
+
+  onSearchInput(event: any): void {
+    const searchTerm: ISearchTermRequest = {
+        employees: this.employeesCopy,
+        searchTerm: event.target.value
+    }
+    this.store.dispatch(SearchTermActions.setSearchTerm({ searchTerm }));
+    this.employees$ = this.filteredEmployees$;
   }
 }

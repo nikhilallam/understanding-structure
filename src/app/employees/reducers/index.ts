@@ -1,6 +1,7 @@
 import { Action, combineReducers, createFeatureSelector, createSelector } from '@ngrx/store';
 import { GetEmployeesState, getEmployeesReducer } from './get-employees.reducer';
 import { EmployeeDetailsState, employeeDetailsReducer } from './get-employee-details.reducer';
+import { SearchTermState, searchReducer } from './search-employee.reducer';
 
 export * from './get-employees.reducer';
 export * from './get-employee-details.reducer';
@@ -10,13 +11,15 @@ export const selectEmployeeDetailState = createFeatureSelector<EmployeeDetailsSt
 
 export interface EmployeeState {
   "employees": GetEmployeesState,
-  "employeeDetails": EmployeeDetailsState
+  "employeeDetails": EmployeeDetailsState,
+  "searchTerm": SearchTermState
 }
 
 export function reducers(state: EmployeeState | undefined, action: Action) {
   return combineReducers({
     "employees": getEmployeesReducer,
     "employeeDetails": employeeDetailsReducer,
+    "searchTerm": searchReducer
   })(state, action);
 }
 

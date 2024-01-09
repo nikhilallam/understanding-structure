@@ -15,6 +15,7 @@ import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/con
 import { ReactiveFormsModule } from '@angular/forms';
 import { BaseLayoutComponent } from './core/components';
 import { MaterialModule } from './material';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export const COMPONENTS = [
   BaseLayoutComponent,
@@ -37,7 +38,16 @@ export const COMPONENTS = [
     ReactiveFormsModule,
     MaterialModule,
     StoreModule.forRoot(employeeRegistrationReducer),
-    EffectsModule.forRoot([EmployeeRegistrationEffects])
+    EffectsModule.forRoot([EmployeeRegistrationEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
