@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/containers';
 import { AuthGuard } from './auth/services/auth.guard';
+import { NotFoundPageComponent } from './auth/components';
+import { EmployeeRegistrationContainerComponent } from './auth/containers';
 
 const routes: Routes = [
   
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: EmployeeRegistrationComponent },
+  { path: 'login', component: EmployeeRegistrationContainerComponent },
   { path: 'notFound', component: NotFoundPageComponent},
   {
     path: 'employees',

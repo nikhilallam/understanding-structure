@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeeRegistrationComponent, NotFoundPageComponent } from './containers';
+import { NotFoundPageComponent } from './components';
+import { EmployeeRegistrationContainerComponent } from './containers';
 
 const routes: Routes = [
-    { path: 'login', component: EmployeeRegistrationComponent },
-    { path: 'notFound', component: NotFoundPageComponent},
+    { path: 'login', component: EmployeeRegistrationContainerComponent },
+    { path: 'notFound', component: NotFoundPageComponent },
     {
         path: '**',
         component: NotFoundPageComponent,

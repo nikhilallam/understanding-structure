@@ -5,13 +5,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p>Page not found</p>
-  `,
-  styles: [
-    `
-      :host {
-        text-align: center;
-      }
-    `,
-  ],
+  `
 })
 export class NotFoundPageComponent {}

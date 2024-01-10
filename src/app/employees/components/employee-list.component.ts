@@ -1,31 +1,35 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IEmployee } from '../models';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'employee-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-employees-list',
   template: `
+    <input type="text" class="search-input" (input)="onSearchInput($event)" placeholder="Search" />
+    <employee-detail *ngIf="showDetails && employeeDetails" [employee]="employeeDetails"></employee-detail>
     <div class="employee-list">
-        <div>List of {{employees?.length}} employees</div>
-        <ul>
-            <li *ngFor="let employee of employees">
-                    <a (click)="displayEmployeeDetails(employee.id)">
-                        {{ employee.employee_name }}
-                    </a>
-            </li>
-        </ul>
+      <ul *ngFor="let employee of employees">
+        <li>
+          <a appHoverBackground (click)="displayEmployeeDetails(employee.id)">
+            {{ employee.employee_name }}
+          </a>
+        </li>
+      </ul>
     </div>
   `,
-  styleUrls: ['./employee-list.component.scss']
+  styleUrls: ['../components/employee-list.component.scss']
 })
-export class EmployeeListComponent {
-    @Input() employees!: IEmployee[];
+export class EmployeesListComponent {
+  @Input() employees: IEmployee[] | null = [];
+  @Input() showDetails: boolean = false;
+  @Input() employeeDetails: IEmployee | null = { id: 0, employee_name: '', employee_salary: 0, employee_age: 0, profile_image: '' };
+  @Output() searchInputEvent = new EventEmitter<string>();
+  @Output() displayEmployeeDetailsEvent = new EventEmitter<number>();
+  
+  onSearchInput(event: any): void {
+    this.searchInputEvent.emit(event.target.value);
+  }
 
-    constructor(private router:Router) {
-    }
-    
-    displayEmployeeDetails(id: number): void {
-        
-    }
+  displayEmployeeDetails(id: number): void {
+    this.displayEmployeeDetailsEvent.emit(id);
+  }
 }

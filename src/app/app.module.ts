@@ -11,14 +11,16 @@ import { employeeRegistrationReducer } from './auth/reducers/employee-registrati
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { EmployeeRegistrationEffects } from './auth/effects/employee-registration.effects';
-import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/containers';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BaseLayoutComponent } from './core/components';
 import { MaterialModule } from './material';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/components';
+import { EmployeeRegistrationContainerComponent } from './auth/containers';
 
 export const COMPONENTS = [
   BaseLayoutComponent,
+  EmployeeRegistrationContainerComponent,
   EmployeeRegistrationComponent,
   NotFoundPageComponent
 ]

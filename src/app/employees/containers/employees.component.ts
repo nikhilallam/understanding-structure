@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { GetEmployeeDetailsActions, GetEmployeesActions, SearchTermActions } from '../actions';
@@ -8,45 +8,30 @@ import { selectAllEmployees, selectEmployeeDetails, selectEmployeeError, selectE
 import { ISearchTermRequest } from '../models/search-term.request.model';
 
 @Component({
-  selector: 'employees',
+  selector: 'app-employees-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <input type="text" (input)="onSearchInput($event)" placeholder="Search" />
-    <employee-detail *ngIf="showDetails" [employee]="(employeeDetails$ | async)!"></employee-detail>
-    <div class="employee-list">
-      <ul *ngFor="let employee of employees$ | async">
-        <li>
-            <a appHoverBackground (click)="displayEmployeeDetails(employee.id)">
-                {{ employee.employee_name }}
-            </a>
-        </li>
-      </ul>
-    </div>
-  `,
-  styleUrls: ['../components/employee-list.component.scss']
+    <app-employees-list
+      [employees]="employees$ | async"
+      [showDetails]="showDetails"
+      [employeeDetails]="employeeDetails$ | async"
+      (searchInputEvent)="onSearchInput($event)"
+      (displayEmployeeDetailsEvent)="displayEmployeeDetails($event)"
+    ></app-employees-list>
+  `
 })
 
-export class EmployeesContainer {
-
+export class EmployeesContainerComponent implements OnInit {
   public employees$?: Observable<IEmployee[]>;
-  public loading$?: Observable<Boolean>;
+  public loading$?: Observable<boolean>;
   public error$?: any;
   public filteredEmployees$?: Observable<IEmployee[]>;
   public employeeDetails$?: Observable<IEmployee>;
 
-  public employees:IEmployee[] = []
-  public employeesCopy:IEmployee[] = []
-  public showDetails:boolean = false
-  public employeeDetails:IEmployee = {
-    id: 0,
-    employee_name: '',
-    employee_salary: 0,
-    employee_age: 0,
-    profile_image: ''
-  }
+  public employeesCopy: IEmployee[] = [];
+  public showDetails: boolean = false;
 
-  
-  constructor(private router:Router, private store: Store) {
+  constructor(private router: Router, private store: Store) {
     this.employees$ = store.select(selectAllEmployees);
     this.loading$ = store.select(selectEmployeeLoading);
     this.error$ = store.select(selectEmployeeError);
@@ -55,25 +40,25 @@ export class EmployeesContainer {
   }
 
   ngOnInit(): void {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem('token');
     if (!token) {
-        this.router.navigate(['/notFound'])
+      this.router.navigate(['/notFound']);
     } else {
-        this.store.dispatch(GetEmployeesActions.getEmployees());
-        this.employees$?.subscribe(data => this.employeesCopy = data)
+      this.store.dispatch(GetEmployeesActions.getEmployees());
+      this.employees$?.subscribe((data) => (this.employeesCopy = data));
     }
   }
 
-  displayEmployeeDetails(id: number) {
-    this.showDetails = true
+  displayEmployeeDetails(id: number): void {
+    this.showDetails = true;
     this.store.dispatch(GetEmployeeDetailsActions.getEmployeeDetails({ id }));
   }
 
   onSearchInput(event: any): void {
     const searchTerm: ISearchTermRequest = {
-        employees: this.employeesCopy,
-        searchTerm: event.target.value
-    }
+      employees: this.employeesCopy,
+      searchTerm: event,
+    };
     this.store.dispatch(SearchTermActions.setSearchTerm({ searchTerm }));
     this.employees$ = this.filteredEmployees$;
   }
