@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="login-container">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" id="email" formControlName="email" />
@@ -35,9 +35,10 @@ export class EmployeeRegistrationComponent {
   @Input() submitted: boolean | null = false;
   @Input() error: any;
 
-  @Output() submitForm = new EventEmitter<void>();
+  @Output() submitForm = new EventEmitter<any>();
 
-  onSubmit() {
+  onSubmit(event : any) {
+    console.log(event)
     this.submitForm.emit();
   }
 }

@@ -17,6 +17,7 @@ import { MaterialModule } from './material';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EmployeeRegistrationComponent, NotFoundPageComponent } from './auth/components';
 import { EmployeeRegistrationContainerComponent } from './auth/containers';
+import { LoggedInEffects } from './auth/effects/logged-in.effects';
 
 export const COMPONENTS = [
   BaseLayoutComponent,
@@ -40,7 +41,7 @@ export const COMPONENTS = [
     ReactiveFormsModule,
     MaterialModule,
     StoreModule.forRoot(employeeRegistrationReducer),
-    EffectsModule.forRoot([EmployeeRegistrationEffects]),
+    EffectsModule.forRoot([EmployeeRegistrationEffects, LoggedInEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,

@@ -5,16 +5,15 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class RedirectGuard implements CanActivate {
 
   constructor(private router:Router) {
   }
 
   canActivate(): Observable<boolean> {
     const token: string | null = localStorage.getItem("token");
-    if (token == null) {
-      this.router.navigate(['/login']);
-      return of(false)
+    if (token != null) {
+      this.router.navigate(['/employees']);
     }
     return of(true)
   }

@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/services/auth.guard';
 import { NotFoundPageComponent } from './auth/components';
 import { EmployeeRegistrationContainerComponent } from './auth/containers';
+import { AuthGuard } from './auth/services/auth.guard';
+import { RedirectGuard } from './auth/services/redirect.guard';
 
 const routes: Routes = [
   
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: EmployeeRegistrationContainerComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full', },
+  { path: 'login', component: EmployeeRegistrationContainerComponent, canActivate: [RedirectGuard]},
   { path: 'notFound', component: NotFoundPageComponent},
   {
     path: 'employees',

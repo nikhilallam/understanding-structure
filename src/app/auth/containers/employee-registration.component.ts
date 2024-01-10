@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EmployeeRegistrationState } from '../reducers/employee-registration.reducer';
 import { IEmployee } from '../../auth/models/employee';
 import { EmployeeRegistrationActions } from '../actions';
+import { IUser } from '../models/user.model';
 
 @Component({
   selector: 'app-employee-registration-container',
@@ -15,10 +16,9 @@ import { EmployeeRegistrationActions } from '../actions';
       [submitting]="submitting$ | async"
       [submitted]="submitted$ | async"
       [error]="error$ | async"
-      (submitForm)="onSubmit()"
+      (submitForm)="onSubmit($event)"
     ></app-employee-registration>
-  `,
-  styleUrls: ['./employee-registration-container.component.scss'],
+  `
 })
 
 export class EmployeeRegistrationContainerComponent implements OnInit {
@@ -37,14 +37,11 @@ export class EmployeeRegistrationContainerComponent implements OnInit {
   submitted$ = this.store.select((state) => state.submitted);
   error$ = this.store.select((state) => state.error);
 
-  onSubmit() {
-    const employee: IEmployee = {
-      id: 2,
-      employee_name: 'Garrett Winters',
-      employee_salary: 170750,
-      employee_age: 63,
-      profile_image: '',
+  onSubmit(event: any) {
+    const credentials: IUser = {
+      username: "somename",
+      password: "password" 
     };
-    this.store.dispatch(EmployeeRegistrationActions.submitForm({ employee }));
+    this.store.dispatch(EmployeeRegistrationActions.submitForm({ credentials }));
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IEmployee } from '../models';
@@ -16,10 +16,21 @@ export class EmployeesService {
   }
 
   getEmployees(): Observable<IData>{
-    return this.http.get<IData>('http://dummy.restapiexample.com/api/v1/employees');
+    const token = localStorage.getItem('token');
+    let headers;
+    if (token != null) {
+      headers = new HttpHeaders({ Authorization: token });
+    }
+    const response = this.http.get<IData>('http://localhost:3001/employees', { headers });
+    return response;
   }
 
   getEmployeeById(id: number): Observable<IEmployeeDetail> {
-    return this.http.get<IEmployeeDetail>(`http://dummy.restapiexample.com/api/v1/employee/${id}`)
+    const token = localStorage.getItem('token');
+    let headers;
+    if (token != null) {
+      headers = new HttpHeaders({ Authorization: token });
+    }
+    return this.http.get<IEmployeeDetail>(`http://localhost:3001/employees/${id}`, { headers })
   }
 }
